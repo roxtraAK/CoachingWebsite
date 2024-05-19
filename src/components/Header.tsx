@@ -30,11 +30,11 @@ export function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const isMobile = useMobile();
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
-  const handleOpenNavMenu = (event) => {
+  const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget);
   };
 
@@ -42,7 +42,7 @@ export function Header() {
     setAnchorElNav(null);
   };
 
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event: any) => {
     setAnchorElUser(event.currentTarget);
   };
 
