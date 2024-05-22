@@ -1,4 +1,7 @@
-@import url(fonts.css);
+@font-face {
+  font-family: "favela";
+  src: url(fonts/EDOSZ.TTF);
+}
 
 * {
   margin: 0;
@@ -7,5 +10,5 @@
 }
 
 .main {
-  font-family: "favela";
+  font-family: "favela", sans-serif;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,7 +18,6 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import styles from "../style.module.css";
 import { useMobile } from "./Hooks/useMobile";
 
 const pages = ["Home", "Coaching", "Erfolge"];
@@ -59,7 +58,7 @@ export function Header() {
     >
       <List>
         {pages.map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem key={text}>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -80,22 +79,22 @@ export function Header() {
         background: "#000000",
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth={false} sx={{ padding: 0 }}>
         <Toolbar disableGutters>
           <Typography
-            className={styles.main}
             variant="h6"
             noWrap
             component="a"
             href="/"
             sx={{
-              marginLeft: { xs: 0, xl: -22 },
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
-              fontSize: "30px",
+              fontSize: "40px",
+              fontFamily: "favela",
               letterSpacing: ".3rem",
               color: "white",
               textDecoration: "none",
+              marginLeft: 2,
             }}
           >
             Fabio Willmann
@@ -108,7 +107,7 @@ export function Header() {
                 aria-label="open drawer"
                 onClick={toggleDrawer(true)}
                 edge="start"
-                sx={{ ml: 1 }}
+                sx={{ marginLeft: 1 }}
               >
                 <MenuIcon />
               </IconButton>
@@ -120,7 +119,7 @@ export function Header() {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: "none", md: "flex" },
+                display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -131,6 +130,8 @@ export function Header() {
                   sx={{
                     my: 3,
                     fontWeight: 700,
+                    fontFamily: "favela",
+                    fontSize: "20px",
                     color: "white",
                     display: "block",
                     mr: 2,
@@ -141,7 +142,7 @@ export function Header() {
               ))}
             </Box>
           )}
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
