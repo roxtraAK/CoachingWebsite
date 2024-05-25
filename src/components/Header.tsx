@@ -118,7 +118,7 @@ export function Header() {
           ) : (
             <Box
               sx={{
-                flexGrow: 1,
+                flexGrow: 0.8,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -135,6 +135,11 @@ export function Header() {
                     color: "white",
                     display: "block",
                     mr: 2,
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.2)",
+                      backgroundColor: "black",
+                    },
                   }}
                 >
                   {page}
