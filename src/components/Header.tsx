@@ -135,7 +135,7 @@ export function Header() {
                     color: "white",
                     display: "block",
                     mr: 2,
-                    transition: "transform 0.3s ease",
+                    transition: "transform 0.2s ease",
                     "&:hover": {
                       transform: "scale(1.2)",
                       backgroundColor: "black",

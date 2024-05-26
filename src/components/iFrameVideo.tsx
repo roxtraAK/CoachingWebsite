@@ -13,21 +13,27 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: { xs: "60%", sm: "50%", md: "40%", lg: "40%" },
-        height: { xs: "20%", sm: "30%", md: "50%", lg: "50%" },
+        width: { xs: "70%", sm: "60%", md: "60%", lg: "50%", xl: "40%" },
+        height: { xs: "25%", sm: "35%", md: "50%", lg: "40%", xl: "45%" },
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         border: "5px solid white",
         borderRadius: "5px",
         boxShadow: 3,
+        overflow: "hidden",
       }}
     >
-      <iframe
+      <Box
+        component="iframe"
         src={url}
-        style={{
+        allowFullScreen={allowFullscreen}
+        sx={{
           width: "100%",
           height: "100%",
           border: "none",
         }}
-        allowFullScreen={allowFullscreen}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       />
     </Box>
   );

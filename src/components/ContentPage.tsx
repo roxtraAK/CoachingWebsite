@@ -20,7 +20,7 @@ export function ContentPage() {
         }}
       >
         <IFrameVideo
-          url="https://www.youtube.com/watch?v=PPGiknlnrlg&ab_channel=DickvanderLugt"
+          url="https://www.youtube.com/embed/TFmiUtzIyGg?si=dkPTneQH94oQeFPi"
           allowFullscreen={true}
         />
       </Stack>
