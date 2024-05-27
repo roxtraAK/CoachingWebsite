@@ -1,19 +1,19 @@
 import { Stack } from "@mui/material";
-import img from "../assets/fabio.jpg";
-import { Header } from "./Header";
-import { IFrameVideo } from "./iFrameVideo";
+import img from "../../assets/fabio.jpg";
+import { IFrameVideo } from "../iFrameVideo";
+import { Header } from "../layout/Header";
 
-export function ContentPage() {
+export function Home() {
   return (
-    <Stack sx={{ position: "relative", minHeight: "100vh" }}>
+    <Stack sx={{ minHeight: "100vh", overflow: "hidden" }}>
       <Stack>
         <Header />
       </Stack>
       <Stack
         sx={{
-          position: "relative",
+          flex: 1,
+          overflowY: "auto",
           width: "100%",
-          height: "100vh",
           backgroundImage: `url(${img})`,
           backgroundSize: "cover",
           backgroundPosition: "center",

@@ -1,14 +1,15 @@
 @font-face {
   font-family: "favela";
-  src: url(fonts/EDOSZ.TTF);
+  src: url(../fonts/EDOSZ.TTF);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "favela", sans-serif;
 }
 
-.main {
+.navbar {
   font-family: "favela", sans-serif;
 }
