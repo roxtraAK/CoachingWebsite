@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import style from "..//styles/home.module.css";
 
 interface IVideoProps {
   url: string;
@@ -8,6 +9,7 @@ interface IVideoProps {
 export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
   return (
     <Box
+      className={style.hidden}
       sx={{
         position: "relative",
         width: { xs: "70%", sm: "60%", md: "50%", lg: "50%", xl: "40%" },
