@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import img from "../../assets/fabio.jpg";
 import { IFrameVideo } from "../iFrameVideo";
 import { Header } from "../layout/Header";
+import { Carousel } from "../content/Carousel";
 
 export function Home() {
   return (
@@ -9,6 +10,7 @@ export function Home() {
       <Stack>
         <Header />
       </Stack>
+
       <Stack
         sx={{
           flex: 1,
@@ -19,6 +21,7 @@ export function Home() {
           backgroundPosition: "center",
         }}
       >
+        <Carousel />
         <IFrameVideo
           url="https://www.youtube.com/embed/TFmiUtzIyGg?si=dkPTneQH94oQeFPi"
           allowFullscreen={true}

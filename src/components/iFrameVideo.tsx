@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface IVideoProps {
   url: string;
@@ -9,32 +9,61 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
   return (
     <Box
       sx={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        position: "relative",
         width: { xs: "70%", sm: "60%", md: "50%", lg: "50%", xl: "40%" },
-        height: { xs: "25%", sm: "35%", md: "40%", lg: "40%", xl: "45%" },
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "5px solid white",
-        borderRadius: "5px",
-        boxShadow: 3,
-        overflow: "hidden",
+        margin: "0 auto",
+        mt: 10,
       }}
     >
-      <Box
-        component="iframe"
-        src={url}
-        allowFullScreen={allowFullscreen}
+      <Typography
+        variant="h6"
+        component="div"
+        color="white"
         sx={{
-          width: "100%",
-          height: "100%",
-          border: "none",
+          mb: 2,
+          ml: -15,
+          fontSize: "36px",
+          fontWeight: 700,
+          fontFamily: "favela",
         }}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      />
+      >
+        Aktuellstes Video
+      </Typography>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          paddingBottom: {
+            xs: "25%",
+            sm: "35%",
+            md: "40%",
+            lg: "40%",
+            xl: "45%",
+          },
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          border: "5px solid white",
+          borderRadius: "5px",
+          boxShadow: 3,
+          overflow: "hidden",
+        }}
+      >
+        <Box
+          component="iframe"
+          src={url}
+          allowFullScreen={allowFullscreen}
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            border: "none",
+          }}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        />
+      </Box>
     </Box>
   );
 }
