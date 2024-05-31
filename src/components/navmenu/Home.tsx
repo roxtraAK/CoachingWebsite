@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import img from "../../assets/fabio.jpg";
 import { IFrameVideo } from "../iFrameVideo";
 import { Header } from "../layout/Header";
@@ -21,7 +21,22 @@ export function Home() {
           backgroundPosition: "center",
         }}
       >
-        <Carousel />
+        <Stack sx={{ color: "white" }}>
+          <Typography
+            sx={{
+              margin: "auto",
+              fontWeight: "700",
+              fontFamily: "favela",
+              fontSize: "32px",
+            }}
+          >
+            Werde jetzt ein teile von meinem Team!
+          </Typography>
+          <Typography sx={{ fontFamily: "favela", margin: "auto" }}>
+            Mein name ist Fabio, ich trainiere seit ..
+          </Typography>
+        </Stack>
+        {/* <Carousel /> */}
         <IFrameVideo
           url="https://www.youtube.com/embed/TFmiUtzIyGg?si=dkPTneQH94oQeFPi"
           allowFullscreen={true}
