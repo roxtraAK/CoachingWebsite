@@ -3,11 +3,17 @@ import style from "../../styles/carousel.module.css";
 import image1 from "../../assets/chris1.webp";
 import image2 from "../../assets/chris2.jpg";
 import image3 from "../../assets/fabio.jpg";
+import { Typography } from "@mui/material";
 
 export function Carousel() {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef<number>();
   const images = [image1, image2, image3];
+  const captions = [
+    "Online Lifestyle & Wettkampf Coaching",
+    "Personal Training",
+    "Kostenloses Erstgespräch",
+  ];
   const delay = 3000;
 
   function resetTimeout() {
@@ -42,6 +48,7 @@ export function Carousel() {
           {images.map((src, idx) => (
             <div className={style.slide} key={idx}>
               <img src={src} alt={`Slide ${idx}`} className={style.image} />
+              <Typography className={style.caption}>{captions[idx]}</Typography>
             </div>
           ))}
         </div>

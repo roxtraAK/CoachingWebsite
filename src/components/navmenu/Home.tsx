@@ -104,7 +104,7 @@ export function Home() {
             </Link>
           </Stack>
         </Stack>
-        <Carousel />
+        {/* <Carousel /> */}
         <IFrameVideo
           url="https://www.youtube.com/embed/JBJR_3Q2Z8I?si=W_ZQCZahckOEnTxT"
           allowFullscreen={true}
