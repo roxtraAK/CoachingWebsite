@@ -4,7 +4,7 @@ import WhatsappLogo from "../../assets/whatsapp.png";
 import YoutubeLogo from "../../assets/youtube.png";
 import InstagramLogo from "../../assets/instagram.png";
 import style from "../../styles/footer.module.css";
-import { Impressum } from "../navmenu/Impressum";
+import { Impressum } from "../content/Impressum";
 
 export function Footer() {
   const theme = createTheme({
@@ -39,6 +39,8 @@ export function Footer() {
 
   return (
     <Stack
+      direction="row"
+      spacing={3}
       sx={{
         mt: "40px",
         overflow: "hidden",
@@ -85,9 +87,14 @@ export function Footer() {
           </Link>
         </Stack>
       </Stack>
-      <ThemeProvider theme={theme}>
-        <Impressum sx={{ display: "flex", justifyContent: "space-between" }} />
-      </ThemeProvider>
+
+      <Stack className={`${style.hidden} ${style.hiddenlogo}`}>
+        <ThemeProvider theme={theme}>
+          <Impressum
+            sx={{ paddingBottom: 2, ml: "auto", mt: { xs: "10px", md: 0 } }}
+          />
+        </ThemeProvider>
+      </Stack>
     </Stack>
   );
 }

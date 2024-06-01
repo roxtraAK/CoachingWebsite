@@ -3,7 +3,7 @@ import { Home } from "./components/navmenu/Home";
 import { Coaching } from "./components/navmenu/Coaching";
 import { Contact } from "./components/navmenu/Contact";
 import { Achievements } from "./components/navmenu/Achievements";
-import { Impressum } from "./components/navmenu/Impressum";
+import { Impressum } from "./components/content/Impressum";
 
 export function App() {
   const routes = createBrowserRouter([

@@ -22,3 +22,7 @@
 .hiddenlogo:nth-child(3) {
   transition-delay: 400ms;
 }
+
+.hiddenlogo:nth-child(4) {
+  transition-delay: 600ms;
+}
