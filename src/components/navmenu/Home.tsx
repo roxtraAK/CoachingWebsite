@@ -29,7 +29,7 @@ export function Home() {
   }, []);
 
   return (
-    <Stack sx={{ minHeight: "100vh", overflow: "hidden" }}>
+    <Stack sx={{ height: "100vh", overflow: "hidden" }}>
       <Stack>
         <Header />
       </Stack>
@@ -56,6 +56,7 @@ export function Home() {
               fontFamily: "favela",
               fontSize: "36px",
               textAlign: "center",
+              width: { xs: "70%", sm: "60%", md: "60%" },
             }}
           >
             Werde jetzt ein Teil von meinem Team!
@@ -67,7 +68,7 @@ export function Home() {
               display: "block",
               placeItems: "center",
               textAlign: "center",
-              maxWidth: { xl: "60%" },
+              width: { xs: "70%", sm: "80%", md: "90%" },
             }}
           >
             In meinem Persönlichen Coaching biete ich dir alles, was du wissen
@@ -86,7 +87,7 @@ export function Home() {
               display: "block",
               placeItems: "center",
               textAlign: "center",
-              maxWidth: { xl: "60%" },
+              width: { xl: "60%" },
             }}
           >
             Hier kostenlos anfragen:

@@ -43,7 +43,6 @@ export function Footer() {
       spacing={3}
       sx={{
         mt: "40px",
-        overflow: "hidden",
         justifyContent: "center",
         alignItems: "center",
       }}

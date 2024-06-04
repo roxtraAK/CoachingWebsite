@@ -12,8 +12,9 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
       className={style.hidden}
       sx={{
         position: "relative",
-        width: { xs: "70%", sm: "60%", md: "50%", lg: "50%", xl: "40%" },
         margin: "0 auto",
+        // minWidth: { xs: "300px", sm: "300px" },
+        // minHeight: { xs: "300px", sm: "300px" },
         mt: 10,
       }}
     >
@@ -23,10 +24,11 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
         color="white"
         sx={{
           mb: 2,
-          ml: -15,
+          ml: { xs: "-10px", sm: "10px", md: "-15px" },
           fontSize: "36px",
           fontWeight: 700,
           fontFamily: "favela",
+          maxWidth: { xs: "90%", sm: "90%", md: "80%" },
         }}
       >
         Aktuellstes Video
@@ -34,7 +36,6 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
       <Box
         sx={{
           position: "relative",
-          width: "100%",
           paddingBottom: {
             xs: "25%",
             sm: "35%",
@@ -47,6 +48,8 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
           alignItems: "center",
           border: "5px solid white",
           borderRadius: "5px",
+          maxWidth: { xs: "100%", sm: "100%", md: "100%" },
+          maxHeight: { xs: "100%", sm: "100%", md: "100%" },
           boxShadow: 3,
           overflow: "hidden",
         }}
@@ -59,8 +62,8 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
             position: "absolute",
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
+            width: { xs: "100%", sm: "100vh", md: "100%" },
+            height: { xs: "100%", sm: "100vh", md: "100%" },
             border: "none",
           }}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
