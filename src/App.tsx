@@ -1,33 +1,21 @@
-import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
-import { Home } from "./components/navmenu/Home";
-import { Coaching } from "./components/navmenu/Coaching";
-import { Contact } from "./components/navmenu/Contact";
-import { Achievements } from "./components/navmenu/Achievements";
-import { Impressum } from "./components/content/Impressum";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Content } from "./components/layout/Content";
+import { Coaching } from "./components/pages/Coaching";
+import { Contact } from "./components/pages/Contact";
+import { Achievements } from "./components/pages/Achievements";
+import { Impressum } from "./components/pages/Impressum";
 
 export function App() {
-  const routes = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/coaching",
-      element: <Coaching />,
-    },
-    {
-      path: "/achievements",
-      element: <Achievements />,
-    },
-    {
-      path: "/impressum",
-      element: <Impressum />,
-    },
-    {
-      path: "/contact",
-      element: <Contact />,
-    },
-  ]);
-
-  return <RouterProvider router={routes} />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Content />}>
+          <Route path="coaching" element={<Coaching />} />
+          <Route path="achievements" element={<Achievements />} />
+          <Route path="impressum" element={<Impressum />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }

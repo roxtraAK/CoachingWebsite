@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import { Link, Stack, Typography } from "@mui/material";
 import img from "../../assets/fabio.jpg";
-import { IFrameVideo } from "../iFrameVideo";
-import { Header } from "../layout/Header";
+import { IFrameVideo } from "../content/iFrameVideo";
+import { Header } from "./Header";
 import { Carousel } from "../content/Carousel";
 import style from "../../styles/home.module.css";
 import WhatsappLogo from "../../assets/whatsapp.png";
-import { Footer } from "../layout/Footer";
+import { Footer } from "./Footer";
+import { Outlet } from "react-router-dom"; // Importiere Outlet
 
-export function Home() {
+export function Content() {
   useEffect(() => {
     const animatedContent = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -94,7 +95,7 @@ export function Home() {
           </Typography>
           <Stack
             sx={{
-              marginTop: "10px",
+              marginTop: "20px",
             }}
           >
             <Link sx={{ mb: 10 }} href="https://wa.me/+491775028513">
@@ -107,9 +108,10 @@ export function Home() {
         </Stack>
         {/* <Carousel /> */}
         <IFrameVideo
-          url="https://www.youtube.com/embed/JBJR_3Q2Z8I?si=W_ZQCZahckOEnTxT"
+          url="https://www.youtube.com/embed/6WQSuVZa6Jk?si=dugA0KQWJx3L_w99"
           allowFullscreen={true}
         />
+        <Outlet />
         <Footer />
       </Stack>
     </Stack>

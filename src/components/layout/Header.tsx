@@ -21,12 +21,13 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import DescriptionIcon from "@mui/icons-material/Description";
 import styles from "../../styles/style.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +38,7 @@ export function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const pages = ["Home", "Coaching", "Erfolge", "Impressum", "Kontakt"];
+  const pages = ["Coaching", "Erfolge", "Impressum", "Kontakt"];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
   const toggleDrawer = () => () => {
@@ -62,7 +63,7 @@ export function Header() {
     >
       <List className={styles.navbar}>
         {pages.map((text, index) => (
-          <ListItem key={text} component={Link} to={text.toLowerCase()}>
+          <ListItem key={text}>
             <ListItemButton>
               <ListItemIcon>
                 {text === "Coaching" ? (
@@ -86,7 +87,7 @@ export function Header() {
 
   const displayType = useMemo(() => {
     if (width < 900) {
-      return "menuOnly";
+      return "menuWithTitle";
     } else if (width < 1100) {
       return "menuWithPages";
     } else {
@@ -108,26 +109,57 @@ export function Header() {
     >
       <Container maxWidth={false} sx={{ padding: 0 }}>
         <Toolbar disableGutters>
-          {displayType === "menuOnly" ? (
-            <>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer()}
-                edge="start"
-                sx={{ marginLeft: 1 }}
+          {displayType === "menuWithTitle" ? (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer()}
+                  edge="start"
+                  sx={{ marginLeft: 1 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Drawer
+                  anchor="left"
+                  open={open}
+                  onClick={toggleDrawer()}
+                  onClose={toggleDrawer()}
+                >
+                  {DrawerList}
+                </Drawer>
+              </Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}
               >
-                <MenuIcon />
-              </IconButton>
-              <Drawer
-                anchor="left"
-                open={open}
-                onClick={toggleDrawer()}
-                onClose={toggleDrawer()}
-              >
-                {DrawerList}
-              </Drawer>
-            </>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={{
+                    display: "flex",
+                    textAlign: "center",
+                    fontWeight: 700,
+                    fontSize: "40px",
+                    fontFamily: "favela",
+                    letterSpacing: ".3rem",
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                >
+                  Fabio Willmann
+                </Typography>
+              </Box>
+            </Box>
           ) : displayType === "menuWithPages" ? (
             <>
               <IconButton
@@ -139,27 +171,38 @@ export function Header() {
               >
                 <MenuIcon />
               </IconButton>
-              {pages.map((page, index) => (
-                <Button
-                  key={`topbar-${index}`}
-                  sx={{
-                    my: 3,
-                    fontWeight: 700,
-                    fontFamily: "favela",
-                    fontSize: "20px",
-                    color: "white",
-                    display: "block",
-                    mr: 2,
-                    transition: "transform 0.2s ease",
-                    "&:hover": {
-                      transform: "scale(1.2)",
-                      backgroundColor: "black",
-                    },
-                  }}
-                >
-                  {page}
-                </Button>
-              ))}
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {pages.map((page, index) => (
+                  <Button
+                    key={`topbar-${index}`}
+                    onClick={() => navigate(`/${page.toLowerCase()}`)}
+                    sx={{
+                      my: 3,
+                      fontWeight: 700,
+                      fontFamily: "favela",
+                      fontSize: "20px",
+                      color: "white",
+                      display: "block",
+                      mx: 2,
+                      transition: "transform 0.2s ease",
+                      "&:hover": {
+                        transform: "scale(1.2)",
+                        backgroundColor: "black",
+                      },
+                      textAlign: "center",
+                    }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
               <Drawer
                 anchor="left"
                 open={open}
@@ -172,9 +215,10 @@ export function Header() {
           ) : (
             <Box
               sx={{
-                flexGrow: 0.8,
                 display: "flex",
+                justifyContent: "space-between",
                 alignItems: "center",
+                width: "100%",
               }}
             >
               <Typography
@@ -183,64 +227,76 @@ export function Header() {
                 component="a"
                 href="/"
                 sx={{
-                  display: { xs: "none", md: "flex" },
                   fontWeight: 700,
                   fontSize: "40px",
                   fontFamily: "favela",
                   letterSpacing: ".3rem",
                   color: "white",
                   textDecoration: "none",
+                  marginLeft: 2,
                 }}
               >
                 Fabio Willmann
               </Typography>
-              {pages.map((page, index) => (
-                <Button
-                  key={`topbar-${index}`}
-                  sx={{
-                    my: 3,
-                    fontWeight: 700,
-                    fontFamily: "favela",
-                    fontSize: "20px",
-                    color: "white",
-                    display: "block",
-                    mr: 2,
-                    transition: "transform 0.2s ease",
-                    "&:hover": {
-                      transform: "scale(1.2)",
-                      backgroundColor: "black",
-                    },
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 20,
+                }}
+              >
+                {pages.map((page, index) => (
+                  <Button
+                    key={`topbar-${index}`}
+                    onClick={() => navigate(`/${page.toLowerCase()}`)}
+                    sx={{
+                      my: 3,
+                      fontWeight: 700,
+                      fontFamily: "favela",
+                      fontSize: "24px",
+                      color: "white",
+                      display: "block",
+                      mx: 2,
+                      transition: "transform 0.2s ease",
+                      "&:hover": {
+                        transform: "scale(1.2)",
+                        backgroundColor: "black",
+                      },
+                      textAlign: "center",
+                    }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
                   }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                  {page}
-                </Button>
-              ))}
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
             </Box>
           )}
-          <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
         </Toolbar>
       </Container>
     </AppBar>
