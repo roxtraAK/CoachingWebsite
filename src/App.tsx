@@ -9,12 +9,11 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Content />}>
-          <Route path="/coaching" element={<Coaching />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/impressum" element={<Impressum />} />
-          <Route path="/contact" element={<Contact />} />
-        </Route>
+        <Route path="/" element={<Content />} />
+        <Route path="/coaching" element={<Coaching />} />
+        <Route path="/achievements" element={<Achievements />} />
+        <Route path="/impressum" element={<Impressum />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );
