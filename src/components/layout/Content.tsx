@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Link, Stack, Typography } from "@mui/material";
-import img from "../../assets/fabio.jpg";
 import { IFrameVideo } from "../content/iFrameVideo";
 import { Header } from "./Header";
 import { Carousel } from "../content/Carousel";
 import style from "../../styles/home.module.css";
 import WhatsappLogo from "../../assets/whatsapp.png";
 import { Footer } from "./Footer";
-import { Outlet } from "react-router-dom"; // Importiere Outlet
+import { Outlet } from "react-router-dom";
+import video from "../../assets/4761767-uhd_4096_2160_25fps.mp4";
 
 export function Content() {
   useEffect(() => {
@@ -39,11 +39,24 @@ export function Content() {
           flex: 1,
           overflowY: "auto",
           width: "100%",
-          backgroundImage: `url(${img})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
         }}
       >
+        <video
+          src={video}
+          autoPlay
+          loop
+          muted
+          style={{
+            position: "absolute",
+            width: "100%",
+            left: "50%",
+            top: "50%",
+            height: "100%",
+            objectFit: "cover",
+            transform: "translate(-50%, -50%)",
+            zIndex: -1,
+          }}
+        />
         <Stack
           className={`${style.hidden}`}
           sx={{ color: "white", mt: 5, alignItems: "center" }}

@@ -41,7 +41,7 @@ export function Header() {
   const pages = ["Coaching", "Erfolge", "Impressum", "Kontakt"];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-  const toggleDrawer = () => () => {
+  const toggleDrawer = () => {
     setOpen((open) => !open);
   };
 
@@ -52,19 +52,19 @@ export function Header() {
   const DrawerList = (
     <Box
       sx={{
-        width: 250,
+        width: { xs: 200, sm: 250 },
         height: "100%",
         backgroundColor: "black",
         color: "white",
       }}
       role="presentation"
-      onClick={toggleDrawer()}
-      onKeyDown={toggleDrawer()}
+      onClick={() => toggleDrawer()}
+      onKeyDown={() => toggleDrawer()}
     >
-      <List className={styles.navbar}>
+      <List sx={{ mt: 8 }} className={styles.navbar}>
         {pages.map((text, index) => (
           <ListItem key={text}>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate(`/${text.toLowerCase()}`)}>
               <ListItemIcon>
                 {text === "Coaching" ? (
                   <FitnessCenterIcon color="primary" key={`navbar-${index}`} />
@@ -74,7 +74,7 @@ export function Header() {
                   <MailIcon color="primary" key={`navbar-${index}`} />
                 ) : text === "Impressum" ? (
                   <DescriptionIcon color="primary" key={`navbar-${index}`} />
-                ) : null}
+                ) : undefined}
               </ListItemIcon>
               <ListItemText primary={text} sx={{ fontFamily: "favela" }} />
             </ListItemButton>
@@ -124,7 +124,7 @@ export function Header() {
                 <IconButton
                   color="inherit"
                   aria-label="open drawer"
-                  onClick={toggleDrawer()}
+                  onClick={() => toggleDrawer()}
                   edge="start"
                   sx={{ marginLeft: 1 }}
                 >
@@ -133,8 +133,8 @@ export function Header() {
                 <Drawer
                   anchor="left"
                   open={open}
-                  onClick={toggleDrawer()}
-                  onClose={toggleDrawer()}
+                  onClick={() => toggleDrawer()}
+                  onClose={() => toggleDrawer()}
                 >
                   {DrawerList}
                 </Drawer>
@@ -156,7 +156,7 @@ export function Header() {
                 <IconButton
                   color="inherit"
                   aria-label="open drawer"
-                  onClick={toggleDrawer()}
+                  onClick={() => toggleDrawer()}
                   edge="start"
                   sx={{ marginLeft: 1 }}
                 >
@@ -165,8 +165,8 @@ export function Header() {
                 <Drawer
                   anchor="left"
                   open={open}
-                  onClick={toggleDrawer()}
-                  onClose={toggleDrawer()}
+                  onClick={() => toggleDrawer()}
+                  onClose={() => toggleDrawer()}
                 >
                   {DrawerList}
                 </Drawer>
@@ -199,7 +199,7 @@ export function Header() {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={toggleDrawer()}
+                onClick={() => toggleDrawer()}
                 edge="start"
                 sx={{ marginLeft: 1 }}
               >
@@ -240,8 +240,8 @@ export function Header() {
               <Drawer
                 anchor="left"
                 open={open}
-                onClick={toggleDrawer()}
-                onClose={toggleDrawer()}
+                onClick={() => toggleDrawer()}
+                onClose={() => toggleDrawer()}
               >
                 {DrawerList}
               </Drawer>
@@ -258,7 +258,6 @@ export function Header() {
               <Typography
                 variant="h6"
                 noWrap
-                onClick={() => navigate("/")}
                 component="a"
                 href="/"
                 sx={{
