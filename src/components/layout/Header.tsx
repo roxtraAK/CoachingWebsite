@@ -86,7 +86,9 @@ export function Header() {
   );
 
   const displayType = useMemo(() => {
-    if (width < 900) {
+    if (width < 600) {
+      return "menu";
+    } else if (width < 900) {
       return "menuWithTitle";
     } else if (width < 1100) {
       return "menuWithPages";
@@ -109,7 +111,39 @@ export function Header() {
     >
       <Container maxWidth={false} sx={{ padding: 0 }}>
         <Toolbar disableGutters>
-          {displayType === "menuWithTitle" ? (
+          {displayType === "menu" ? (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer()}
+                  edge="start"
+                  sx={{ marginLeft: 1 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Drawer
+                  anchor="left"
+                  open={open}
+                  onClick={toggleDrawer()}
+                  onClose={toggleDrawer()}
+                >
+                  {DrawerList}
+                </Drawer>
+              </Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}
+              ></Box>
+            </Box>
+          ) : displayType === "menuWithTitle" ? (
             <Box
               sx={{
                 display: "flex",
@@ -224,6 +258,7 @@ export function Header() {
               <Typography
                 variant="h6"
                 noWrap
+                onClick={() => navigate("/")}
                 component="a"
                 href="/"
                 sx={{

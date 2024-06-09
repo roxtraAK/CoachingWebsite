@@ -23,8 +23,8 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
         color="white"
         sx={{
           mb: 2,
-          ml: { xs: "-10px", sm: "50px", md: "-50px" },
-          fontSize: "42px",
+          mr: { xs: "10px", sm: "50px", md: "-50px" },
+          fontSize: { xs: "36px", md: "42px" },
           fontWeight: 700,
           fontFamily: "favela",
         }}
@@ -39,8 +39,20 @@ export function IFrameVideo({ url, allowFullscreen }: IVideoProps) {
           alignItems: "center",
           border: "5px solid white",
           borderRadius: "5px",
-          width: { sm: "500px", md: "800px", lg: "1000px", xl: "1000px" },
-          height: { sm: "300px", md: "400px", lg: "450px", xl: "500px" },
+          width: {
+            xs: "350px",
+            sm: "500px",
+            md: "800px",
+            lg: "1000px",
+            xl: "1000px",
+          },
+          height: {
+            xs: "200px",
+            sm: "300px",
+            md: "400px",
+            lg: "450px",
+            xl: "500px",
+          },
           boxShadow: 3,
           overflow: "hidden",
         }}

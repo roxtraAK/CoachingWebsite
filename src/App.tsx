@@ -5,15 +5,15 @@ import { Contact } from "./components/pages/Contact";
 import { Achievements } from "./components/pages/Achievements";
 import { Impressum } from "./components/pages/Impressum";
 
-export function App() {
+export default function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Content />}>
-          <Route path="coaching" element={<Coaching />} />
-          <Route path="achievements" element={<Achievements />} />
-          <Route path="impressum" element={<Impressum />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="/coaching" element={<Coaching />} />
+          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
     </Router>

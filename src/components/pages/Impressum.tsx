@@ -1,6 +1,5 @@
 import { Header } from "../layout/Header";
 
-// Impressum Component here
 export function Impressum() {
   return (
     <div>

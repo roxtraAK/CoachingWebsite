@@ -30,11 +30,10 @@ export function Content() {
   }, []);
 
   return (
-    <Stack sx={{ height: "100vh", overflow: "hidden" }}>
+    <Stack sx={{ height: "100vh" }}>
       <Stack>
         <Header />
       </Stack>
-
       <Stack
         sx={{
           flex: 1,
@@ -47,7 +46,7 @@ export function Content() {
       >
         <Stack
           className={`${style.hidden}`}
-          sx={{ color: "white", mt: 15, alignItems: "center" }}
+          sx={{ color: "white", mt: 5, alignItems: "center" }}
         >
           <Typography
             sx={{
@@ -57,7 +56,7 @@ export function Content() {
               fontFamily: "favela",
               fontSize: "36px",
               textAlign: "center",
-              width: { xs: "70%", sm: "60%", md: "60%" },
+              width: { xs: "80%", sm: "60%", md: "60%" },
             }}
           >
             Werde jetzt ein Teil von meinem Team!
@@ -69,7 +68,7 @@ export function Content() {
               display: "block",
               placeItems: "center",
               textAlign: "center",
-              width: { xs: "70%", sm: "80%", md: "90%" },
+              width: { xs: "80%", sm: "80%", md: "90%" },
             }}
           >
             In meinem Persönlichen Coaching biete ich dir alles, was du wissen
