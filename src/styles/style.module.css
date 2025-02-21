@@ -1,6 +1,6 @@
 @font-face {
   font-family: "favela";
-  src: url(../fonts/EDOSZ.TTF);
+  src: url(../../public/fonts/EDOSZ.TTF) format("truetype");
 }
 
 * {
@@ -8,6 +8,8 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "favela", sans-serif;
+  color: white;
+  caret-color: white;
 }
 
 .navbar {

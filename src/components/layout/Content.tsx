@@ -119,7 +119,7 @@ export function Content() {
         </Stack>
         {/* <Carousel /> */}
         <IFrameVideo
-          url="https://www.youtube.com/embed/6WQSuVZa6Jk?si=dugA0KQWJx3L_w99"
+          url="https://www.youtube.com/embed/lDGfyTM--PY?si=Ixu6LSgGdWSlEFh7"
           allowFullscreen={true}
         />
         <Outlet />

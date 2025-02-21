@@ -18,13 +18,18 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// has to be configured
-app.get("/data", async (req, res) => {
+app.post("/coaching", async (req, res) => {
+  const { firstname, lastname, email, phonenumber } = req.body;
+
   try {
-    const result = await pool.query("SELECT * FROM your_table_name");
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error fetching data from database");
+    await pool.query(
+      "INSERT INTO users (firstname, lastname, email, phonenumber) VALUES ($1, $2, $3, $4)",
+      [firstname, lastname, email, phonenumber]
+    );
+
+    res.status(201).json({ message: "Benutzer erfolgreich hinzugefügt" });
+  } catch (error) {
+    console.error("Datenbankfehler:", error);
+    res.status(500).json({ error: "Fehler beim Speichern" });
   }
 });
