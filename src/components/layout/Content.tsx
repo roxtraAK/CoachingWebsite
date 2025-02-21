@@ -2,13 +2,11 @@ import { useEffect } from "react";
 import { Link, Stack, Typography } from "@mui/material";
 import { IFrameVideo } from "../content/iFrameVideo";
 import { Header } from "./Header";
-import { Carousel } from "../content/Carousel";
 import style from "../../styles/home.module.css";
 import WhatsappLogo from "../../assets/whatsapp.png";
 import { Footer } from "./Footer";
 import { Outlet } from "react-router-dom";
 import video from "../../assets/4761767-uhd_4096_2160_25fps.mp4";
-import CounterButton from "./CounterButton";
 
 export function Content() {
   useEffect(() => {
@@ -35,7 +33,6 @@ export function Content() {
       <Stack>
         <Header />
       </Stack>
-      <CounterButton />
       <Stack
         sx={{
           flex: 1,
