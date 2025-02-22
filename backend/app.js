@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 var pgp = require("pg-promise")(/*options*/);
-var db = pgp("postgres://postgres:admin@localhost:5432/Todo");
+var db = pgp("postgres://postgres:Ipodtouch5s@localhost:5432/Coaching");
 const app = express();
 var cors = require("cors");
 const port = 3000;
@@ -23,7 +23,7 @@ app.post("/coaching", async (req, res) => {
 
   try {
     await pool.query(
-      "INSERT INTO users (firstname, lastname, email, phonenumber) VALUES ($1, $2, $3, $4)",
+      "INSERT INTO Coaching (firstname, lastname, email, phonenumber) VALUES ($1, $2, $3, $4)",
       [firstname, lastname, email, phonenumber]
     );
 
