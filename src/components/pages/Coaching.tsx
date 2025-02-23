@@ -8,7 +8,7 @@ export function Coaching() {
   return (
     <Box
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
         background:
           "linear-gradient(to bottom, #000000, #111111, #222221, #393938, #000000)",
       }}

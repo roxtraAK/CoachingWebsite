@@ -7,18 +7,65 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CoachingApi from "../../API/CoachingApi";
+import MUIAlert from "../../Alert/Alert";
+import { ErrorMessages } from "../../Alert/AlertMessages";
+import { useIsMobile } from "../../Hooks/useIsMobile";
 
 export function Formular() {
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phonenumber, setPhonenumber] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>();
+
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    // Sichern, dass beim Laden der Seite der Hover-Effekt entfernt wird
+    const style = document.styleSheets[0];
+    style.insertRule(
+      ".MuiInput-underline:hover:before { border-bottom-color: #0288D1 !important; }",
+      style.cssRules.length
+    );
+  }, []);
+
+  const validateInputs = (inputs: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    phonenumber: string;
+  }) => {
+    if (!inputs.firstname) {
+      setErrorMessage(ErrorMessages.FirstnameError);
+      return;
+    }
+    if (!inputs.lastname) {
+      setErrorMessage(ErrorMessages.LastnameError);
+      return;
+    }
+    if (!inputs.email) {
+      setErrorMessage(ErrorMessages.EmailError);
+      return;
+    }
+    if (!inputs.phonenumber || !inputs.phonenumber.startsWith("+")) {
+      setErrorMessage(ErrorMessages.PhonenumberError);
+      return;
+    }
+  };
 
   const customTextFieldStyles = {
     "& .MuiInputBase-input": { color: "white" },
-    "& .MuiInput-underline:before": { borderBottomColor: "white" },
-    "& .MuiInput-underline:hover:before": { borderBottomColor: "#0288D1" },
+    "& .MuiInput-underline:before": {
+      borderBottomColor: "white",
+    },
+    "& .MuiInput-underline.Mui-focused:before": {
+      borderBottomColor: "#0288D1",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#0288D1",
+    },
   };
 
   return (
@@ -26,13 +73,13 @@ export function Formular() {
       elevation={24}
       sx={{
         overflow: "auto",
-        paddingTop: 5,
-        paddingRight: 7,
+        paddingTop: 3,
+        paddingRight: 5,
         paddingLeft: 2,
-        height: "70vh",
-        width: "40vw",
+        height: isMobile ? "75%" : "72vh",
+        width: isMobile ? "87vw" : "45vw",
         background: "linear-gradient(45deg, #393938, #111111)",
-        borderRadius: 3,
+        borderRadius: 5,
       }}
     >
       <Box sx={{ marginBottom: 2, padding: 1 }}>
@@ -53,7 +100,7 @@ export function Formular() {
       <form>
         <Stack spacing={3} sx={{ color: "white" }}>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Typography fontFamily={"favela"} variant="body1">
                 Vorname
               </Typography>
@@ -70,7 +117,7 @@ export function Formular() {
             </Grid>
           </Grid>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Typography fontFamily={"favela"} variant="body1">
                 Nachname
               </Typography>
@@ -87,7 +134,7 @@ export function Formular() {
             </Grid>
           </Grid>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Typography fontFamily={"favela"} variant="body1">
                 E-Mail
               </Typography>
@@ -105,7 +152,7 @@ export function Formular() {
             </Grid>
           </Grid>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Typography fontFamily={"favela"} variant="body1">
                 Telefon
               </Typography>
@@ -113,6 +160,7 @@ export function Formular() {
             <Grid item xs={9}>
               <TextField
                 value={phonenumber}
+                required
                 onChange={(e) => setPhonenumber(e.target.value)}
                 sx={customTextFieldStyles}
                 fullWidth
@@ -122,14 +170,28 @@ export function Formular() {
               />
             </Grid>
           </Grid>
-          <Stack sx={{ alignItems: "center", paddingTop: 7 }}>
+          <Stack sx={{ alignItems: "center", paddingTop: 5, paddingLeft: 5 }}>
             <Button
-              sx={{ width: "20vw", height: "50px" }}
+              sx={{
+                width: isMobile ? "60vw" : "25vw",
+                height: "50px",
+                fontFamily: "favela",
+              }}
               color="info"
               variant="contained"
+              onClick={() => {
+                validateInputs({ firstname, lastname, email, phonenumber });
+                if (!errorMessage)
+                  CoachingApi({ firstname, lastname, email, phonenumber });
+              }}
             >
-              Senden
+              Jetzt Erstgespräch Buchen
             </Button>
+            {errorMessage && !isMobile ? (
+              <Box sx={{ paddingTop: 3 }}>
+                <MUIAlert message={errorMessage} />
+              </Box>
+            ) : null}
           </Stack>
         </Stack>
       </form>

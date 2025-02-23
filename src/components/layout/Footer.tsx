@@ -1,32 +1,13 @@
 import { useEffect } from "react";
-import {
-  Button,
-  createTheme,
-  Link,
-  Stack,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import WhatsappLogo from "../../assets/whatsapp.png";
 import YoutubeLogo from "../../assets/youtube.png";
 import InstagramLogo from "../../assets/instagram.png";
 import style from "../../styles/footer.module.css";
-import { useNavigate } from "react-router-dom";
-import { Impressum } from "../pages/Impressum";
+import { useIsMobile } from "../../Hooks/useIsMobile";
 
 export function Footer() {
-  const navigate = useNavigate();
-
-  const theme = createTheme({
-    typography: {
-      fontFamily: "favela",
-    },
-    palette: {
-      primary: {
-        main: "#ffffff",
-      },
-    },
-  });
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const animatedContent = new IntersectionObserver((entries) => {
@@ -60,12 +41,19 @@ export function Footer() {
       <Stack
         direction="row"
         spacing={3}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Stack className={`${style.hidden} ${style.hiddenlogo}`}>
           <Link sx={{ mb: "10px" }} href="https://wa.me/+491775028513">
             <img
-              style={{ height: "50px", width: "50px" }}
+              style={{
+                height: isMobile ? "35px" : "50px",
+                width: isMobile ? "35px" : "50px",
+              }}
               src={WhatsappLogo}
               alt="WhatsApp"
             />
@@ -77,7 +65,10 @@ export function Footer() {
             href="https://www.youtube.com/@fabio_willmann"
           >
             <img
-              style={{ height: "50px", width: "50px" }}
+              style={{
+                height: isMobile ? "35px" : "50px",
+                width: isMobile ? "35px" : "50px",
+              }}
               src={YoutubeLogo}
               alt="YouTube"
             />
@@ -89,24 +80,15 @@ export function Footer() {
             href="https://www.instagram.com/fabio_willmann/"
           >
             <img
-              style={{ height: "40px", width: "40px" }}
+              style={{
+                height: isMobile ? "30px" : "50px",
+                width: isMobile ? "30px" : "50px",
+              }}
               src={InstagramLogo}
               alt="Instagram"
             />
           </Link>
         </Stack>
-      </Stack>
-
-      <Stack className={`${style.hidden} ${style.hiddenlogo}`}>
-        <ThemeProvider theme={theme}>
-          <Button onClick={() => navigate("impressum")}>
-            <Typography
-              sx={{ fontFamily: "favela", color: "white", fontSize: "26px" }}
-            >
-              Impressum
-            </Typography>
-          </Button>
-        </ThemeProvider>
       </Stack>
     </Stack>
   );
