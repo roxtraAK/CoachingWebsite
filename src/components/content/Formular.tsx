@@ -75,7 +75,7 @@ export function Formular() {
         overflow: "auto",
         paddingTop: 3,
         paddingRight: 5,
-        paddingLeft: 2,
+        paddingLeft: 5,
         height: isMobile ? "75%" : "72vh",
         width: isMobile ? "87vw" : "45vw",
         background: "linear-gradient(45deg, #393938, #111111)",
@@ -170,7 +170,7 @@ export function Formular() {
               />
             </Grid>
           </Grid>
-          <Stack sx={{ alignItems: "center", paddingTop: 5, paddingLeft: 5 }}>
+          <Stack sx={{ alignItems: "center", paddingTop: 5 }}>
             <Button
               sx={{
                 width: isMobile ? "60vw" : "25vw",

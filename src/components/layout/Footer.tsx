@@ -60,10 +60,7 @@ export function Footer() {
           </Link>
         </Stack>
         <Stack className={`${style.hidden} ${style.hiddenlogo}`}>
-          <Link
-            sx={{ mb: "10px" }}
-            href="https://www.youtube.com/@fabio_willmann"
-          >
+          <Link sx={{ mb: "10px" }} href="https://www.youtube.com/@favelafabio">
             <img
               style={{
                 height: isMobile ? "35px" : "50px",
@@ -77,7 +74,7 @@ export function Footer() {
         <Stack className={`${style.hidden} ${style.hiddenlogo}`}>
           <Link
             sx={{ mb: "10px" }}
-            href="https://www.instagram.com/fabio_willmann/"
+            href="https://www.instagram.com/fabioxwillmann/"
           >
             <img
               style={{

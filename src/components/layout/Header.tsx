@@ -20,14 +20,19 @@ import MenuItem from "@mui/material/MenuItem";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import DescriptionIcon from "@mui/icons-material/Description";
+import StarRateIcon from "@mui/icons-material/StarRate";
 import styles from "../../styles/style.module.css";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
+import { useShoppingCartContext } from "../../Hooks/useShoppingCartContext";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
+  const cart = useShoppingCartContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,7 +43,13 @@ export function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const pages = ["Coaching", "Erfolge", "Impressum", "Kontakt"];
+  const pages = [
+    "Coaching",
+    "Personaltraining",
+    "Erfolge",
+    "Impressum",
+    "Warenkorb",
+  ];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
   const toggleDrawer = () => {
@@ -66,14 +77,18 @@ export function Header() {
           <ListItem key={text}>
             <ListItemButton onClick={() => navigate(`/${text.toLowerCase()}`)}>
               <ListItemIcon>
-                {text === "Coaching" ? (
+                {text === "Personaltraining" ? (
                   <FitnessCenterIcon color="primary" key={`navbar-${index}`} />
-                ) : text === "Erfolge" ? (
+                ) : text === "Coaching" ? (
                   <EmojiEventsIcon color="primary" key={`navbar-${index}`} />
                 ) : text === "Kontakt" ? (
                   <MailIcon color="primary" key={`navbar-${index}`} />
                 ) : text === "Impressum" ? (
                   <DescriptionIcon color="primary" key={`navbar-${index}`} />
+                ) : text === "Warenkorb" ? (
+                  <ShoppingCartIcon color="primary" key={`navbar-${index}`} />
+                ) : text === "Erfolge" ? (
+                  <StarRateIcon color="primary" key={`navbar-${index}`} />
                 ) : undefined}
               </ListItemIcon>
               <ListItemText primary={text} sx={{ fontFamily: "favela" }} />
@@ -81,6 +96,7 @@ export function Header() {
           </ListItem>
         ))}
       </List>
+      <Box></Box>
       <Divider />
     </Box>
   );
@@ -178,7 +194,7 @@ export function Header() {
                   variant="h6"
                   noWrap
                   component="a"
-                  href="/"
+                  onClick={() => navigate("/")}
                   sx={{
                     display: "flex",
                     textAlign: "center",
@@ -213,29 +229,34 @@ export function Header() {
                   alignItems: "center",
                 }}
               >
-                {pages.map((page, index) => (
-                  <Button
-                    key={`topbar-${index}`}
-                    onClick={() => navigate(`/${page.toLowerCase()}`)}
-                    sx={{
-                      my: 3,
-                      fontWeight: 700,
-                      fontFamily: "favela",
-                      fontSize: "20px",
-                      color: "white",
-                      display: "block",
-                      mx: 2,
-                      transition: "transform 0.2s ease",
-                      "&:hover": {
-                        transform: "scale(1.2)",
-                        backgroundColor: "black",
-                      },
-                      textAlign: "center",
-                    }}
-                  >
-                    {page}
-                  </Button>
-                ))}
+                {pages.map((page, index) => {
+                  if (page === "Warenkorb") {
+                    return null;
+                  }
+                  return (
+                    <Button
+                      key={`topbar-${index}`}
+                      onClick={() => navigate(`/${page.toLowerCase()}`)}
+                      sx={{
+                        my: 3,
+                        fontWeight: 700,
+                        fontFamily: "favela",
+                        fontSize: "20px",
+                        color: "white",
+                        display: "block",
+                        mx: 2,
+                        transition: "transform 0.2s ease",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                          backgroundColor: "black",
+                        },
+                        textAlign: "center",
+                      }}
+                    >
+                      {page}
+                    </Button>
+                  );
+                })}
               </Box>
               <Drawer
                 anchor="left"
@@ -259,7 +280,7 @@ export function Header() {
                 variant="h6"
                 noWrap
                 component="a"
-                href="/"
+                onClick={() => navigate("/")}
                 sx={{
                   fontWeight: 700,
                   fontSize: "40px",
@@ -281,29 +302,47 @@ export function Header() {
                   marginRight: 20,
                 }}
               >
-                {pages.map((page, index) => (
-                  <Button
-                    key={`topbar-${index}`}
-                    onClick={() => navigate(`/${page.toLowerCase()}`)}
-                    sx={{
-                      my: 3,
-                      fontWeight: 700,
-                      fontFamily: "favela",
-                      fontSize: "24px",
-                      color: "white",
-                      display: "block",
-                      mx: 2,
-                      transition: "transform 0.2s ease",
-                      "&:hover": {
-                        transform: "scale(1.2)",
-                        backgroundColor: "black",
-                      },
-                      textAlign: "center",
-                    }}
-                  >
-                    {page}
-                  </Button>
-                ))}
+                {pages.map((page, index) => {
+                  if (page === "Warenkorb") {
+                    return null;
+                  }
+                  return (
+                    <Button
+                      key={`topbar-${index}`}
+                      onClick={() => navigate(`/${page.toLowerCase()}`)}
+                      sx={{
+                        my: 3,
+                        fontWeight: 700,
+                        fontFamily: "favela",
+                        fontSize: "24px",
+                        color: "white",
+                        display: "block",
+                        mx: 2,
+                        transition: "transform 0.2s ease",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                          backgroundColor: "black",
+                        },
+                        textAlign: "center",
+                      }}
+                    >
+                      {page}
+                    </Button>
+                  );
+                })}
+              </Box>
+              <Box sx={{ paddingRight: "1vw" }}>
+                {cart.productCount === 0 ? (
+                  <IconButton>
+                    <ShoppingCartIcon />
+                  </IconButton>
+                ) : (
+                  <Badge badgeContent={cart.productCount} color="info">
+                    <IconButton>
+                      <ShoppingCartIcon />
+                    </IconButton>
+                  </Badge>
+                )}
               </Box>
               <Box sx={{ flexGrow: 0 }}>
                 <Menu

@@ -75,6 +75,24 @@ app.post("/coaching", async (req, res) => {
   }
 });
 
+app.post("/personaltraining", async (req, res) => {
+  try {
+    const { bookedDate } = req.body;
+
+    if (bookedDate === undefined) {
+      return res.status(400).json({ error: "Fehlende Parameter" });
+    }
+
+    await db.none(
+      'INSERT INTO public."Personaltraining" (bookedDate) VALUES ($1)',
+      [bookedDate]
+    );
+  } catch (error) {
+    console.error("Fehler:", error);
+    res.status(500).json({ error: "Fehler beim Buchen des Personaltrainings" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
