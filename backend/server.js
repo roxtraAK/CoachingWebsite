@@ -84,7 +84,7 @@ app.post("/personaltraining", async (req, res) => {
     }
 
     await db.none(
-      'INSERT INTO public."Personaltraining" (bookedDate) VALUES ($1)',
+      'INSERT INTO public."Personaltraining" ("bookedDate") VALUES ($1)',
       [bookedDate]
     );
   } catch (error) {

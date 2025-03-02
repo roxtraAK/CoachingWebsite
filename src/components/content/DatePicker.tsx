@@ -4,12 +4,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { format } from "date-fns";
 import "../../styles/datepicker.css";
-import { PersonalTraining } from "../pages/PersonalTraining";
 import PersonalTrainingApi from "../../API/PersonalTrainingApi";
 
 const FreeTimePicker: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [freeTimes, setFreeTimes] = useState<string[]>([]);
+  const date = new Date();
 
   const allTimes: string[] = ["09:00", "11:00", "14:00", "16:00", "18:00"];
 
@@ -59,7 +59,7 @@ const FreeTimePicker: React.FC = () => {
           </Typography>
           <List sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
             {freeTimes.length > 0 ? (
-              freeTimes.map((date, index) => (
+              freeTimes.map((time, index) => (
                 <ListItem
                   key={index}
                   sx={{
@@ -70,12 +70,17 @@ const FreeTimePicker: React.FC = () => {
                 >
                   <Button
                     fullWidth
-                    onClick={() => PersonalTrainingApi({ date })}
+                    onClick={() =>
+                      PersonalTrainingApi({
+                        date: format(selectedDate, "dd.MM.yyyy"),
+                        time,
+                      })
+                    }
                     key={index}
                     variant="contained"
                     color="info"
                   >
-                    {date}
+                    {time}
                   </Button>
                 </ListItem>
               ))
