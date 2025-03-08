@@ -87,9 +87,34 @@ app.post("/personaltraining", async (req, res) => {
       'INSERT INTO public."Personaltraining" ("bookedDate") VALUES ($1)',
       [bookedDate]
     );
+    res.status(200).send("Personaltraining gebucht");
   } catch (error) {
     console.error("Fehler:", error);
     res.status(500).json({ error: "Fehler beim Buchen des Personaltrainings" });
+  }
+});
+
+app.get("/personaltraining", async (req, res) => {
+  const { date } = req.query;
+
+  if (!date) {
+    return res.status(400).json({ error: "Ein Datum muss angegeben werden." });
+  }
+
+  try {
+    const result = await db.any(
+      `SELECT "bookedDate" FROM public."Personaltraining"
+       WHERE DATE("bookedDate") = DATE($1)`,
+      [new Date(date)]
+    );
+
+    console.log("Gebuchte Termine:", result); // Debugging
+    res.status(200).json(result.map((row) => row.bookedDate));
+  } catch (error) {
+    console.error("Fehler beim Abrufen der gebuchten Termine:", error);
+    res
+      .status(500)
+      .json({ error: "Fehler beim Abrufen der gebuchten Termine" });
   }
 });
 

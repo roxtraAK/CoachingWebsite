@@ -1,39 +1,51 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { format } from "date-fns";
 import "../../styles/datepicker.css";
-import PersonalTrainingApi from "../../API/PersonalTrainingApi";
+import { GetBookedPersonalTraining } from "../../API/PersonalTrainingApi";
 
-const FreeTimePicker: React.FC = () => {
+type FreeTimePickerProps = {
+  onSelect: (date: Date | null, time: string) => void;
+};
+
+export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | undefined>(
+    undefined
+  );
   const [freeTimes, setFreeTimes] = useState<string[]>([]);
-  const date = new Date();
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
 
   const allTimes: string[] = ["09:00", "11:00", "14:00", "16:00", "18:00"];
 
-  const bookedTimes: string[] = [];
-
   const handleDateChange = (date: Date | null) => {
+    // Passe den Typ von undefined auf null an
     setSelectedDate(date);
-    if (date) {
-      const availableTimes = allTimes.filter(
-        (time) => !bookedTimes.includes(time)
-      );
-      setFreeTimes(availableTimes);
-    } else {
-      setFreeTimes([]);
-    }
+    setSelectedTime(undefined);
   };
 
   useEffect(() => {
-    if (selectedDate) {
-      const availableTimes = allTimes.filter(
-        (time) => !bookedTimes.includes(time)
-      );
-      setFreeTimes(availableTimes);
-    }
+    const fetchBookedTimes = async () => {
+      if (selectedDate) {
+        try {
+          const bookedDates = await GetBookedPersonalTraining(selectedDate);
+          const bookedTimesFormatted = bookedDates.map((date) =>
+            format(new Date(date), "HH:mm")
+          );
+          setBookedTimes(bookedTimesFormatted);
+
+          setFreeTimes(allTimes);
+        } catch (error) {
+          console.error("Fehler beim Abrufen der gebuchten Zeiten:", error);
+        }
+      } else {
+        setFreeTimes([]);
+      }
+    };
+
+    fetchBookedTimes();
   }, [selectedDate]);
 
   return (
@@ -42,7 +54,7 @@ const FreeTimePicker: React.FC = () => {
         <DatePicker
           selected={selectedDate}
           onChange={handleDateChange}
-          dateFormat="dd.MM.yyyy"
+          dateFormat="yyyy-MM-dd"
           inline
           calendarClassName="custom-calendar"
         />
@@ -70,28 +82,37 @@ const FreeTimePicker: React.FC = () => {
                 >
                   <Button
                     fullWidth
-                    onClick={() =>
-                      PersonalTrainingApi({
-                        date: format(selectedDate, "dd.MM.yyyy"),
-                        time,
-                      })
-                    }
-                    key={index}
+                    onClick={() => {
+                      setSelectedTime(time);
+                      onSelect(selectedDate, time);
+                    }}
                     variant="contained"
-                    color="info"
+                    disabled={bookedTimes.includes(time)}
+                    aria-selected={selectedTime === time}
+                    sx={{
+                      backgroundColor:
+                        selectedTime === time ? "green" : "info.main",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor:
+                          selectedTime === time ? "darkgreen" : "info.dark",
+                      },
+                      "&.Mui-disabled": {
+                        color: "white !important",
+                        backgroundColor: "grey.500 !important",
+                      },
+                    }}
                   >
                     {time}
                   </Button>
                 </ListItem>
               ))
             ) : (
-              <p>Leider keine freien Zeiten verfügbar.</p>
+              <Typography>Leider keine freien Zeiten verfügbar.</Typography>
             )}
           </List>
         </Box>
       )}
     </Box>
   );
-};
-
-export default FreeTimePicker;
+}

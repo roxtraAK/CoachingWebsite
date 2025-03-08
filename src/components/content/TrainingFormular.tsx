@@ -10,14 +10,28 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import MUIAlert from "../../Alert/Alert";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useShoppingCartContext } from "../../Hooks/useShoppingCartContext";
 import DateTimePicker from "./DatePicker";
+import MUIAlert from "../../Alert/Alert";
+import { ErrorMessages } from "../../Alert/AlertMessages";
+
+type Product = {
+  selectedPackage: string;
+  selectedDate: Date | null;
+  time: string;
+};
 
 export function TrainingFormular() {
   const cart = useShoppingCartContext();
   const isMobile = useIsMobile();
+
+  const [selectedPackage, setSelectedPackage] = useState<string>("");
+  const [selectedProduct, setSelectedProduct] = useState<{
+    selectedDate: Date | null;
+    time: string;
+  } | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const packages = [
     "1 Std. Personal Training",
@@ -25,7 +39,46 @@ export function TrainingFormular() {
     "3 Std. Personal Training",
   ];
 
-  const [selectedPackage, setSelectedPackage] = useState<string>("");
+  const validateInputs = (inputs: {
+    selectedPackage: string;
+    selectedDate: Date | null;
+    time: string;
+  }) => {
+    if (!inputs.selectedPackage) {
+      setErrorMessage(ErrorMessages.PackageError);
+      return false;
+    }
+    if (!inputs.selectedDate) {
+      setErrorMessage(ErrorMessages.DateError);
+      return false;
+    }
+    if (!inputs.time) {
+      setErrorMessage(ErrorMessages.TimeError);
+      return false;
+    }
+    setErrorMessage("");
+    return true;
+  };
+
+  const handleSelection = (date: Date | null, time: string) => {
+    setSelectedProduct({ selectedDate: date, time });
+    console.log("Ausgewähltes Training:", date, time);
+  };
+
+  const addItemToShoppingCart = (): void => {
+    if (selectedProduct && selectedPackage) {
+      const product: Product = {
+        selectedPackage,
+        selectedDate: selectedProduct.selectedDate,
+        time: selectedProduct.time,
+      };
+
+      cart.setProductCount((prev) => prev + 1);
+      console.log("Produkt hinzugefügt:", product);
+    } else {
+      console.warn("Bitte ein Paket, Datum und Uhrzeit auswählen.");
+    }
+  };
 
   return (
     <Paper
@@ -36,7 +89,7 @@ export function TrainingFormular() {
         paddingRight: 6,
         paddingLeft: 6,
         height: isMobile ? "100%" : "72vh",
-        width: isMobile ? "87vw" : "45vw",
+        maxWidth: isMobile ? "87vw" : "45vw",
         background: "linear-gradient(45deg, #393938, #111111)",
         borderRadius: 5,
       }}
@@ -104,10 +157,15 @@ export function TrainingFormular() {
           <Typography sx={{ pb: 3 }} variant="h6" fontFamily="favela">
             Wähle ein Datum und eine Uhrzeit
           </Typography>
-          <DateTimePicker />
+          <DateTimePicker onSelect={handleSelection} />
         </Box>
       </Box>
-      <Stack sx={{ alignItems: "center", paddingTop: 5 }}>
+      <Stack sx={{ alignItems: "center" }}>
+        {errorMessage ? (
+          <Box sx={{ paddingTop: 1, pb: 5 }}>
+            <MUIAlert width="80vh" message={errorMessage} />
+          </Box>
+        ) : null}
         <Button
           sx={{
             mb: 3,
@@ -117,7 +175,14 @@ export function TrainingFormular() {
           color="info"
           variant="contained"
           onClick={() => {
-            cart.setProductCount((prev) => prev + 1);
+            const isValid = validateInputs({
+              selectedPackage,
+              selectedDate: selectedProduct?.selectedDate ?? null,
+              time: selectedProduct?.time ?? "",
+            });
+            if (isValid) {
+              addItemToShoppingCart();
+            }
           }}
         >
           Zum Warenkorb hinzufügen
