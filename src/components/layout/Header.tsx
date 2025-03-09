@@ -23,16 +23,12 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import styles from "../../styles/style.module.css";
 import { useNavigate } from "react-router-dom";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Badge from "@mui/material/Badge";
-import { useShoppingCartContext } from "../../Hooks/useShoppingCartContext";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
-  const cart = useShoppingCartContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -85,8 +81,6 @@ export function Header() {
                   <MailIcon color="primary" key={`navbar-${index}`} />
                 ) : text === "Impressum" ? (
                   <DescriptionIcon color="primary" key={`navbar-${index}`} />
-                ) : text === "Warenkorb" ? (
-                  <ShoppingCartIcon color="primary" key={`navbar-${index}`} />
                 ) : text === "Erfolge" ? (
                   <StarRateIcon color="primary" key={`navbar-${index}`} />
                 ) : undefined}
@@ -112,7 +106,6 @@ export function Header() {
       return "full";
     }
   }, [width]);
-
   return (
     <AppBar
       position="sticky"
@@ -190,24 +183,25 @@ export function Header() {
               <Box
                 sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}
               >
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="a"
-                  onClick={() => navigate("/")}
-                  sx={{
-                    display: "flex",
-                    textAlign: "center",
-                    fontWeight: 700,
-                    fontSize: "40px",
-                    fontFamily: "favela",
-                    letterSpacing: ".3rem",
-                    color: "white",
-                    textDecoration: "none",
-                  }}
-                >
-                  Fabio Willmann
-                </Typography>
+                <Button onClick={() => navigate("/")}>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    sx={{
+                      display: "flex",
+                      textAlign: "center",
+                      fontWeight: 700,
+                      fontSize: "40px",
+                      fontFamily: "favela",
+                      letterSpacing: ".3rem",
+                      color: "white",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Fabio Willmann
+                  </Typography>
+                </Button>
               </Box>
             </Box>
           ) : displayType === "menuWithPages" ? (
@@ -276,23 +270,24 @@ export function Header() {
                 width: "100%",
               }}
             >
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                onClick={() => navigate("/")}
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "40px",
-                  fontFamily: "favela",
-                  letterSpacing: ".3rem",
-                  color: "white",
-                  textDecoration: "none",
-                  marginLeft: 2,
-                }}
-              >
-                Fabio Willmann
-              </Typography>
+              <Button onClick={() => navigate("/")}>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "40px",
+                    fontFamily: "favela",
+                    letterSpacing: ".3rem",
+                    color: "white",
+                    textDecoration: "none",
+                    marginLeft: 2,
+                  }}
+                >
+                  Fabio Willmann
+                </Typography>
+              </Button>
               <Box
                 sx={{
                   flexGrow: 1,
@@ -330,19 +325,6 @@ export function Header() {
                     </Button>
                   );
                 })}
-              </Box>
-              <Box sx={{ paddingRight: "1vw" }}>
-                {cart.productCount === 0 ? (
-                  <IconButton>
-                    <ShoppingCartIcon />
-                  </IconButton>
-                ) : (
-                  <Badge badgeContent={cart.productCount} color="info">
-                    <IconButton>
-                      <ShoppingCartIcon />
-                    </IconButton>
-                  </Badge>
-                )}
               </Box>
               <Box sx={{ flexGrow: 0 }}>
                 <Menu

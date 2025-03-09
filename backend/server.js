@@ -77,15 +77,25 @@ app.post("/coaching", async (req, res) => {
 
 app.post("/personaltraining", async (req, res) => {
   try {
-    const { bookedDate } = req.body;
+    console.log("Received data:", req.body);
 
-    if (bookedDate === undefined) {
+    const { bookedDate, firstname, lastname, email, phonenumber, product } =
+      req.body;
+
+    if (
+      bookedDate === undefined ||
+      firstname === undefined ||
+      lastname === undefined ||
+      email === undefined ||
+      phonenumber === undefined ||
+      product === undefined
+    ) {
       return res.status(400).json({ error: "Fehlende Parameter" });
     }
 
     await db.none(
-      'INSERT INTO public."Personaltraining" ("bookedDate") VALUES ($1)',
-      [bookedDate]
+      'INSERT INTO public."Personaltraining" ("bookedDate", firstname, lastname, email, phonenumber, product) VALUES ($1, $2, $3, $4, $5, $6)',
+      [bookedDate, firstname, lastname, email, phonenumber, product]
     );
     res.status(200).send("Personaltraining gebucht");
   } catch (error) {

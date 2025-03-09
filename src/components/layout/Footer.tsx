@@ -33,7 +33,7 @@ export function Footer() {
       direction="row"
       spacing={3}
       sx={{
-        mt: "40px",
+        mt: 1,
         justifyContent: "center",
         alignItems: "center",
       }}

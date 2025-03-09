@@ -23,7 +23,6 @@ export function Formular() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Sichern, dass beim Laden der Seite der Hover-Effekt entfernt wird
     const style = document.styleSheets[0];
     style.insertRule(
       ".MuiInput-underline:hover:before { border-bottom-color: #0288D1 !important; }",

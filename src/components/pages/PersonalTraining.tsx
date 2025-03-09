@@ -17,8 +17,7 @@ export function PersonalTraining() {
       </Stack>
       <Stack
         sx={{
-          position: "absolute",
-          width: "100%",
+          minHeight: "100vh",
           paddingTop: "5vh",
         }}
       >

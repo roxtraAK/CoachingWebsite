@@ -7,7 +7,7 @@ import "../../styles/datepicker.css";
 import { GetBookedPersonalTraining } from "../../API/PersonalTrainingApi";
 
 type FreeTimePickerProps = {
-  onSelect: (date: Date | null, time: string) => void;
+  onSelect: (dateTime: string) => void;
 };
 
 export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
@@ -21,7 +21,6 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
   const allTimes: string[] = ["09:00", "11:00", "14:00", "16:00", "18:00"];
 
   const handleDateChange = (date: Date | null) => {
-    // Passe den Typ von undefined auf null an
     setSelectedDate(date);
     setSelectedTime(undefined);
   };
@@ -35,7 +34,6 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
             format(new Date(date), "HH:mm")
           );
           setBookedTimes(bookedTimesFormatted);
-
           setFreeTimes(allTimes);
         } catch (error) {
           console.error("Fehler beim Abrufen der gebuchten Zeiten:", error);
@@ -47,6 +45,20 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
 
     fetchBookedTimes();
   }, [selectedDate]);
+
+  // Formatierung der ausgewählten Zeit und Datum für die API
+  const getFormattedDateTime = (
+    date: Date | null,
+    time: string | undefined
+  ): string | null => {
+    if (!date || !time) return null;
+
+    // Formatierung des Datums im 'yyyy-MM-dd' Format
+    const dateString = format(date, "yyyy-MM-dd");
+
+    // Kombiniere Datum und Zeit im 'yyyy-MM-dd HH:mm:ss' Format
+    return `${dateString} ${time}:00`; // Zeit ergänzt mit Sekunden
+  };
 
   return (
     <Box>
@@ -84,7 +96,15 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
                     fullWidth
                     onClick={() => {
                       setSelectedTime(time);
-                      onSelect(selectedDate, time);
+
+                      const bookedDateTime = getFormattedDateTime(
+                        selectedDate,
+                        time
+                      );
+
+                      if (bookedDateTime) {
+                        onSelect(bookedDateTime);
+                      }
                     }}
                     variant="contained"
                     disabled={bookedTimes.includes(time)}

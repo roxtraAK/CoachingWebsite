@@ -1,30 +1,61 @@
 import axios from "axios";
 
 export interface IPersonalTraining {
-  date: string;
+  date: string | null;
   time: string;
 }
 
-export async function BookPersonalTraining(dateTime: IPersonalTraining) {
+export type User = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phonenumber: string;
+};
+
+export async function BookPersonalTraining(
+  dateTime: IPersonalTraining,
+  user: User,
+  product: string
+): Promise<number | null> {
   const { date, time } = dateTime;
+  const { firstname, lastname, email, phonenumber } = user;
 
   const bookedDate: string = `${date} ${time}`;
 
-  if (bookedDate === undefined) {
+  if (!bookedDate) {
     console.error("Please book a Personal Training");
-    return;
+    return null;
   }
 
-  axios
-    .post("http://localhost:3000/personaltraining", {
-      bookedDate: bookedDate,
-    })
-    .then((response) => {
-      console.log("personal training booked", response.data);
-    })
-    .catch((error) => {
-      console.log("Error booking personal training", error.response.data);
-    });
+  if (!firstname || !lastname || !email || !phonenumber) {
+    console.error("Please enter all user information");
+    return null;
+  }
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/personaltraining",
+      {
+        bookedDate: bookedDate,
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        phonenumber: phonenumber,
+        product: product,
+      }
+    );
+
+    console.log("Personal training booked", response.data);
+    return response.status;
+  } catch (error: any) {
+    if (error.response) {
+      console.error("Error booking personal training", error.response.data);
+      return error.response.status;
+    } else {
+      console.error("Error booking personal training", error.message);
+      return null;
+    }
+  }
 }
 
 export async function GetBookedPersonalTraining(date: Date): Promise<Date[]> {
