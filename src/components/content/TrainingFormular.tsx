@@ -167,9 +167,9 @@ export function TrainingFormular() {
           </Box>
         </Box>
         <Stack sx={{ alignItems: "center" }}>
-          {errorMessage ? (
+          {errorMessage && !selectedPackage ? (
             <Box sx={{ paddingTop: 1, pb: 1 }}>
-              <MUIAlert severity="error" width="80vh" message={errorMessage} />
+              <MUIAlert severity="error" width="60vh" message={errorMessage} />
             </Box>
           ) : null}
           <Button

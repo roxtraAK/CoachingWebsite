@@ -19,6 +19,7 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
 
   const allTimes: string[] = ["09:00", "11:00", "14:00", "16:00", "18:00"];
+  const today = Date.now();
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -46,18 +47,15 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
     fetchBookedTimes();
   }, [selectedDate]);
 
-  // Formatierung der ausgewählten Zeit und Datum für die API
   const getFormattedDateTime = (
     date: Date | null,
     time: string | undefined
   ): string | null => {
     if (!date || !time) return null;
 
-    // Formatierung des Datums im 'yyyy-MM-dd' Format
     const dateString = format(date, "yyyy-MM-dd");
 
-    // Kombiniere Datum und Zeit im 'yyyy-MM-dd HH:mm:ss' Format
-    return `${dateString} ${time}:00`; // Zeit ergänzt mit Sekunden
+    return `${dateString} ${time}:00`;
   };
 
   return (
@@ -107,7 +105,11 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
                       }
                     }}
                     variant="contained"
-                    disabled={bookedTimes.includes(time)}
+                    disabled={
+                      bookedTimes.includes(time) ||
+                      format(selectedDate, "yyyy-MM-dd") <
+                        format(today, "yyyy-MM-dd")
+                    }
                     aria-selected={selectedTime === time}
                     sx={{
                       backgroundColor:
