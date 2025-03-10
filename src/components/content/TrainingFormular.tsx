@@ -15,6 +15,7 @@ import DateTimePicker from "./DatePicker";
 import MUIAlert from "../../Alert/Alert";
 import { ErrorMessages } from "../../Alert/AlertMessages";
 import FormDialog from "./FormDialog";
+import { BookingResponse } from "../../API/PersonalTrainingApi";
 
 export type Product = {
   selectedPackage: string;
@@ -32,12 +33,13 @@ export function TrainingFormular() {
     time: string;
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [bookingStatus, setBookingStatus] = useState<number | null>(null);
+  const [bookingResponse, setbookingResponse] =
+    useState<BookingResponse | null>(null);
 
-  const handleBookingStatus = (status: number | null) => {
-    setBookingStatus(status);
+  const handlebookingResponse = (response: BookingResponse | null) => {
+    setbookingResponse(response);
     setTimeout(() => {
-      setBookingStatus(null);
+      setbookingResponse(null);
     }, 5000);
   };
 
@@ -196,7 +198,7 @@ export function TrainingFormular() {
           </Button>
         </Stack>
         <FormDialog
-          onBookingStatus={handleBookingStatus}
+          onBookingResponse={handlebookingResponse}
           product={{
             selectedPackage,
             selectedDate: selectedProduct?.selectedDate ?? null,
@@ -207,15 +209,15 @@ export function TrainingFormular() {
         />
       </Paper>
       <Box sx={{ pt: 4, pb: 2 }}>
-        {bookingStatus ? (
+        {bookingResponse ? (
           <MUIAlert
             width="80vh"
             message={
-              bookingStatus === 200
+              bookingResponse.status === 200
                 ? "Training erfolgreich gebucht"
                 : "Das Training konnte nicht gebucht werden"
             }
-            severity={bookingStatus === 200 ? "success" : "error"}
+            severity={bookingResponse.status === 200 ? "success" : "error"}
           />
         ) : undefined}
       </Box>

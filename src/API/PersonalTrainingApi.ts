@@ -12,11 +12,23 @@ export type User = {
   phonenumber: string;
 };
 
+export interface BookingResponse {
+  status: number;
+  data: {
+    bookedDate: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phonenumber: string;
+    product: string;
+  };
+}
+
 export async function BookPersonalTraining(
   dateTime: IPersonalTraining,
   user: User,
   product: string
-): Promise<number | null> {
+): Promise<BookingResponse | null> {
   const { date, time } = dateTime;
   const { firstname, lastname, email, phonenumber } = user;
 
@@ -45,12 +57,11 @@ export async function BookPersonalTraining(
       }
     );
 
-    console.log("Personal training booked", response.data);
-    return response.status;
+    return { status: response.status, data: response.data };
   } catch (error: any) {
     if (error.response) {
       console.error("Error booking personal training", error.response.data);
-      return error.response.status;
+      return { status: error.response.status, data: error.response.data };
     } else {
       console.error("Error booking personal training", error.message);
       return null;
@@ -65,8 +76,6 @@ export async function GetBookedPersonalTraining(date: Date): Promise<Date[]> {
         date: date.toISOString(),
       },
     });
-
-    console.log("Personal training booked", response.data);
 
     return response.data.map((d: string) => new Date(d));
   } catch (error) {

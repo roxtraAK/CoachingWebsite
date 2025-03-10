@@ -10,13 +10,14 @@ type FreeTimePickerProps = {
   onSelect: (dateTime: string) => void;
 };
 
-export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
+export default function DateTimePicker({ onSelect }: FreeTimePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined
   );
   const [freeTimes, setFreeTimes] = useState<string[]>([]);
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
 
   const allTimes: string[] = ["09:00", "11:00", "14:00", "16:00", "18:00"];
   const today = Date.now();
@@ -30,8 +31,9 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
     const fetchBookedTimes = async () => {
       if (selectedDate) {
         try {
-          const bookedDates = await GetBookedPersonalTraining(selectedDate);
-          const bookedTimesFormatted = bookedDates.map((date) =>
+          const result = await GetBookedPersonalTraining(selectedDate);
+          setBookedDates(bookedDates);
+          const bookedTimesFormatted = result.map((date) =>
             format(new Date(date), "HH:mm")
           );
           setBookedTimes(bookedTimesFormatted);
@@ -45,7 +47,7 @@ export default function FreeTimePicker({ onSelect }: FreeTimePickerProps) {
     };
 
     fetchBookedTimes();
-  }, [selectedDate]);
+  }, [selectedDate, bookedDates]);
 
   const getFormattedDateTime = (
     date: Date | null,

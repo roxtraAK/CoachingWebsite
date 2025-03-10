@@ -29,7 +29,11 @@ export function Content() {
   }, []);
 
   return (
-    <Stack sx={{ height: "100vh" }}>
+    <Stack
+      sx={{
+        height: "100vh",
+      }}
+    >
       <Stack>
         <Header />
       </Stack>
@@ -38,24 +42,10 @@ export function Content() {
           flex: 1,
           overflowY: "auto",
           width: "100%",
+          background:
+            "linear-gradient(to bottom, #000000, #111111, #222221, #393938, #000000)",
         }}
       >
-        <video
-          src={video}
-          autoPlay
-          loop
-          muted
-          style={{
-            position: "absolute",
-            width: "100%",
-            left: "50%",
-            top: "50%",
-            height: "100%",
-            objectFit: "cover",
-            transform: "translate(-50%, -50%)",
-            zIndex: -1,
-          }}
-        />
         <Stack
           className={`${style.hidden}`}
           sx={{ color: "white", mt: 5, alignItems: "center" }}

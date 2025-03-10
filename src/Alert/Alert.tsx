@@ -4,12 +4,10 @@ export default function MUIAlert({
   message,
   width,
   severity,
-  onClose,
 }: {
   message: string | undefined;
   width?: string;
   severity?: "error" | "info" | "success" | "warning";
-  onClose?: () => void;
 }) {
   return (
     <Box>

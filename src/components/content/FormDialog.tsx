@@ -9,23 +9,27 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Product } from "./TrainingFormular";
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { BookPersonalTraining } from "../../API/PersonalTrainingApi";
+import {
+  BookingResponse,
+  BookPersonalTraining,
+} from "../../API/PersonalTrainingApi";
 
 export default function FormDialog({
   product,
   open,
   setOpen,
-  onBookingStatus,
+  onBookingResponse,
 }: {
   product: Product;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onBookingStatus: (status: number | null) => void;
+  onBookingResponse: (response: BookingResponse | null) => void;
 }) {
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phonenumber, setPhonenumber] = useState<string>("");
+  const [response, setResponse] = useState<BookingResponse | null>(null);
 
   const handleClose = () => {
     setOpen(false);
@@ -57,16 +61,20 @@ export default function FormDialog({
 
   const handleSubmit = async () => {
     if (product) {
-      const statusCode = await BookPersonalTraining(
+      const response = await BookPersonalTraining(
         { date: product.selectedDate, time: product.time },
         { firstname, lastname, email, phonenumber },
         product.selectedPackage
       );
-      if (onBookingStatus) {
-        onBookingStatus(statusCode);
+
+      setResponse(response);
+      if (onBookingResponse) {
+        onBookingResponse(response);
       }
     }
     handleClose();
+    // force reload to update the booked times
+    window.location.reload();
   };
 
   return (

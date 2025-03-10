@@ -98,6 +98,56 @@ app.post("/personaltraining", async (req, res) => {
       [bookedDate, firstname, lastname, email, phonenumber, product]
     );
     res.status(200).send("Personaltraining gebucht");
+
+    const bookedDateFormatted = new Date(bookedDate).toLocaleString("de-DE", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false, // 24-Stunden-Format
+    });
+
+    console.log("Sending Mail to:", email);
+    await mailer.sendMail({
+      from: process.env.MAIL,
+      to: email,
+      subject: "Personaltraining gebucht",
+      text:
+        "Hi " +
+        firstname +
+        ",\n\nVielen Dank für deine Buchung am " +
+        bookedDateFormatted +
+        " Uhr" +
+        ". Ich freue mich auf das Personaltraining mit dir.\n\nMit freundlichen Grüßen,\nFabio Willmann",
+    });
+
+    console.log("Mail sent");
+
+    await mailer.sendMail({
+      from: process.env.MAIL,
+      to: process.env.MAIL,
+      subject: "Personaltraining gebucht",
+      text:
+        firstname +
+        " " +
+        lastname +
+        " " +
+        "hat am " +
+        bookedDateFormatted +
+        " Uhr" +
+        " " +
+        "Ein Personaltraining gebucht." +
+        "\n\n" +
+        "Produkt: " +
+        product +
+        "\n" +
+        "Email: " +
+        email +
+        "\n" +
+        "Telefonnummer: " +
+        phonenumber,
+    });
   } catch (error) {
     console.error("Fehler:", error);
     res.status(500).json({ error: "Fehler beim Buchen des Personaltrainings" });
@@ -118,7 +168,6 @@ app.get("/personaltraining", async (req, res) => {
       [new Date(date)]
     );
 
-    console.log("Gebuchte Termine:", result); // Debugging
     res.status(200).json(result.map((row) => row.bookedDate));
   } catch (error) {
     console.error("Fehler beim Abrufen der gebuchten Termine:", error);
